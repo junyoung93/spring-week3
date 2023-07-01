@@ -51,7 +51,7 @@ public class JwtUtil {
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username) // 사용자 식별자값(ID)
-                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한
+                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한 //Q.질문
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
@@ -101,9 +101,10 @@ public class JwtUtil {
    }
 
     // 토큰에서 사용자 정보 가져오기
+    // 키 확인작업
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-        // getBody() 하면 Claims을 가지고 올 수 있다.
+        // getBody() 하면 body부분에 있는  Claims을 가지고 올 수 있다.
         // JWT는 Claim 기반 web token
     }
 }

@@ -23,13 +23,16 @@ public class AuthController {
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final JwtUtil jwtUtil;
+
     @GetMapping("/create-cookie")
     public String createCookie(HttpServletResponse res) {
         addCookie("Robbie Auth", res);
 
         return "createCookie";
     }
+
     @GetMapping("/create-session")
+    // 만들기만 했는데 전송이 됬다? 체크해보기
     public String createSession(HttpServletRequest req) {
         // 세션이 존재할 경우 세션 반환, 없을 경우 새로운 세션을 생성한 후 반환
         HttpSession session = req.getSession(true);
@@ -39,8 +42,10 @@ public class AuthController {
 
         return "createSession";
     }
+
     @GetMapping("/get-cookie")
     //쿠키값 가져오기 @CookieValue
+    // 여러개의 쿠키를 가져올 때 생각해보기
     public String getCookie(@CookieValue(AUTHORIZATION_HEADER) String value) {
         System.out.println("value = " + value);
 
@@ -52,7 +57,7 @@ public class AuthController {
         // 세션이 존재할 경우 세션 반환, 없을 경우 null 반환
         HttpSession session = req.getSession(false);
 
-        String value = (String) session.getAttribute(AUTHORIZATION_HEADER); // 가져온 세션에 저장된 Value 를 Name 을 사용하여 가져옵니다.
+        String value = (String) session.getAttribute(AUTHORIZATION_HEADER); // 가져온 세션에 저장된 Value 를 Name 을 사용하여 가져옵니다.  // 캐스팅해야함 // 안하면 object 클래스로 나오게되니
         System.out.println("value = " + value);
 
         return "getSession : " + value;
@@ -89,12 +94,14 @@ public class AuthController {
     }
 
     @GetMapping("/get-jwt")
+    //@CookieValue("Cookie의 Name")
+    //Cookie의 Name 정보를 전달해주면 해당 정보를 토대로 Cookie의 Value를 가져옵니다.
     public String getJwt(@CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
         // JWT 토큰 substring
         String token = jwtUtil.substringToken(tokenValue);
 
         // 토큰 검증
-        if(!jwtUtil.validateToken(token)){
+        if (!jwtUtil.validateToken(token)) {
             throw new IllegalArgumentException("Token Error");
         }
 

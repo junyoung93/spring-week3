@@ -22,6 +22,11 @@ repositories {
 }
 
 dependencies {
+// JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+// MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
     // JWT
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
