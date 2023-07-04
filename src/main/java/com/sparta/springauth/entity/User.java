@@ -26,7 +26,7 @@ public class User {
 
     @Column(nullable = false)
     //@Enumerated= 데이터 enum 타입을 데이터베이스에 저장
-    @Enumerated(value = EnumType.STRING) // enum 그대로 스트링으로 저장
+    @Enumerated(value = EnumType.STRING) // enum의 이름 그대로 스트링으로 저장
     private UserRoleEnum role;
 
     public User(String username, String password, String email, UserRoleEnum role) {

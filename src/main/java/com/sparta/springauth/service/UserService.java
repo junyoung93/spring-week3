@@ -53,6 +53,7 @@ public class UserService {
         }
 
         // 사용자 등록
+        // 데이터베이스의 한 row
         User user = new User(username, password, email, role);
         userRepository.save(user);
     }

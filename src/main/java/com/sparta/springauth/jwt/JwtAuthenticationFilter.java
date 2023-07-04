@@ -29,9 +29,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         log.info("로그인 시도");
         try {
+            //request.getInputStream() 사용자 아읻 ㅣ비번
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
-
+            //인증처리하는 메서드
             return getAuthenticationManager().authenticate(
+                    //인증처리하는 메서드 안에 넣을 토큰객체
                     new UsernamePasswordAuthenticationToken(
                             requestDto.getUsername(),
                             requestDto.getPassword(),
